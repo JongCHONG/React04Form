@@ -21,9 +21,12 @@ class App extends React.Component {
 
   handleEmailChange (e) {
     const emailfilter = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/
-    let emailIsValid = emailfilter.test(e.target.value)
-    console.log(emailIsValid)
+    let emailValidation = emailfilter.test(e.target.value)
     this.setState({ email: e.target.value })
+    if (emailValidation === true) {
+      this.setState({ emailIsValid: true })
+    }
+    console.log(this.state.email)
   }
   handleSubmit(e) {
     e.preventDefault()
@@ -39,8 +42,11 @@ class App extends React.Component {
             <input 
               type="email" 
               onChange={this.handleEmailChange} 
-              className="form-control border-danger" 
-              aria-describedby="emailHelp"
+              className={
+                this.state.email === "" ? "form-control" : 
+                this.state.emailIsValid === false ? "form-control border-danger" :
+                this.state.emailIsValid === true && "form-control border-success"
+              }
             />
             <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
           </div>
