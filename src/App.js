@@ -17,6 +17,7 @@ class App extends React.Component {
 
     this.handleEmailChange = this.handleEmailChange.bind(this)
     this.handlePasswordChange = this.handlePasswordChange.bind(this)
+    this.handleRememberMeChange = this.handleRememberMeChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
@@ -34,6 +35,14 @@ class App extends React.Component {
     this.setState({ password: e.target.value })
     if (passwordValidation === 5) {
       this.setState({ passwordIsValid: true })
+    }
+  }
+  handleRememberMeChange (e) {
+    console.log("rm" + this.state.rememberMe);
+    if (e.target.value === "on" && this.state.rememberMe === true) {
+      this.setState({ rememberMe: false })
+    } else {
+      this.setState({ rememberMe: true })
     }
   }
   handleSubmit(e) {
@@ -71,7 +80,11 @@ class App extends React.Component {
             />
           </div>
           <div className="mb-3 form-check">
-            <input type="checkbox" className="form-check-input"/>
+            <input 
+              type="checkbox" 
+              onChange={this.handleRememberMeChange} 
+              className="form-check-input"
+            />
             <label className="form-check-label">Remember me?</label>
           </div>
           <button type="submit" className="btn btn-primary">Submit</button>
