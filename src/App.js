@@ -16,6 +16,7 @@ class App extends React.Component {
     }
 
     this.handleEmailChange = this.handleEmailChange.bind(this)
+    this.handlePasswordChange = this.handlePasswordChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
@@ -26,7 +27,14 @@ class App extends React.Component {
     if (emailValidation === true) {
       this.setState({ emailIsValid: true })
     }
-    console.log(this.state.email)
+    // console.log(this.state.email)
+  }
+  handlePasswordChange (e) {
+    let passwordValidation = e.target.value.length
+    this.setState({ password: e.target.value })
+    if (passwordValidation === 5) {
+      this.setState({ passwordIsValid: true })
+    }
   }
   handleSubmit(e) {
     e.preventDefault()
@@ -52,7 +60,15 @@ class App extends React.Component {
           </div>
           <div className="mb-3">
             <label className="form-label">Password</label>
-            <input type="password" className="form-control"/>
+            <input 
+              type="password" 
+              onChange={this.handlePasswordChange} 
+              className={
+                this.state.password === "" ? "form-control" : 
+                this.state.passwordIsValid === false ? "form-control border-danger" :
+                this.state.passwordIsValid === true && "form-control border-success"
+              }
+            />
           </div>
           <div className="mb-3 form-check">
             <input type="checkbox" className="form-check-input"/>
