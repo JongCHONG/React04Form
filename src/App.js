@@ -38,7 +38,7 @@ class App extends React.Component {
     }
   }
   handleRememberMeChange (e) {
-    console.log("rm" + this.state.rememberMe);
+    // console.log("rm" + this.state.rememberMe);
     if (e.target.value === "on" && this.state.rememberMe === true) {
       this.setState({ rememberMe: false })
     } else {
@@ -47,48 +47,55 @@ class App extends React.Component {
   }
   handleSubmit(e) {
     e.preventDefault()
-    // console.log(this.state)
+    if (this.state.emailIsValid && this.state.passwordIsValid) {
+      this.setState({ isSubmitted: true })
+    }
+    console.log(this.state)
   }
 
   render() {
     return(
       <div className="container">
-        <form onSubmit={this.handleSubmit} className="mb-3">
-          <div className="mb-3">
-            <label className="form-label">Email address</label>
-            <input 
-              type="email" 
-              onChange={this.handleEmailChange} 
-              className={
-                this.state.email === "" ? "form-control" : 
-                this.state.emailIsValid === false ? "form-control border-danger" :
-                this.state.emailIsValid === true && "form-control border-success"
-              }
-            />
-            <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
-          </div>
-          <div className="mb-3">
-            <label className="form-label">Password</label>
-            <input 
-              type="password" 
-              onChange={this.handlePasswordChange} 
-              className={
-                this.state.password === "" ? "form-control" : 
-                this.state.passwordIsValid === false ? "form-control border-danger" :
-                this.state.passwordIsValid === true && "form-control border-success"
-              }
-            />
-          </div>
-          <div className="mb-3 form-check">
-            <input 
-              type="checkbox" 
-              onChange={this.handleRememberMeChange} 
-              className="form-check-input"
-            />
-            <label className="form-check-label">Remember me?</label>
-          </div>
-          <button type="submit" className="btn btn-primary">Submit</button>
-        </form>
+        {this.state.isSubmitted === true ? <div> Email a bien été ajouté. </div> : 
+          <form onSubmit={this.handleSubmit} className="mb-3">
+            <div className="mb-3">
+              <label className="form-label">Email address</label>
+              <input 
+                type="email" 
+                onChange={this.handleEmailChange} 
+                className={
+                  this.state.email === "" ? "form-control" : 
+                  this.state.emailIsValid === false ? "form-control border-danger" :
+                  this.state.emailIsValid === true && "form-control border-success"
+                }
+              />
+              <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Password</label>
+              <input 
+                type="password" 
+                onChange={this.handlePasswordChange} 
+                className={
+                  this.state.password === "" ? "form-control" : 
+                  this.state.passwordIsValid === false ? "form-control border-danger" :
+                  this.state.passwordIsValid === true && "form-control border-success"
+                }
+              />
+            </div>
+            <div className="mb-3 form-check">
+              <input 
+                type="checkbox" 
+                onChange={this.handleRememberMeChange} 
+                className="form-check-input"
+              />
+              <label className="form-check-label">Remember me?</label>
+            </div>
+            <button type="submit" className="btn btn-primary" onSubmit={this.handleSubmit}>
+              Submit
+            </button>          
+          </form>
+        }
       </div>
     )
   }
